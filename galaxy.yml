@@ -1,0 +1,20 @@
+---
+namespace: hadtrindade
+name: hadtrindade
+version: 0.1.0
+readme: README.md
+authors:
+- Haddley Trindade <haddleytrindade@gmail.com>
+description: Collections de treinamento em Ansible.
+license:
+- GPL-2.0-or-later
+license_file: LICENSE
+tags: 
+  - devops
+dependencies:
+  community.general: '>=1.0.0'
+repository: https://github.com/hadtrindade/ansible-collections
+documentation: https://github.com/hadtrindade/ansible-collections
+homepage: https://github.com/hadtrindade/ansible-collections
+issues: https://github.com/hadtrindade/ansible-collections/issues
+build_ignore: []
