@@ -62,7 +62,6 @@
       kubernetes.core.helm_repository:
         name: nginx-stable
         repo_url: https://kubernetes.github.io/ingress-nginx
-        update_repo_cache: true
         
     - name: Install NGINX Ingress Controller
       kubernetes.core.helm:
@@ -71,12 +70,12 @@
         release_namespace: ingress-nginx
         create_namespace: true
         state: present
+        update_repo_cache: true
 
     - name: Add stable chart repo metallb
       kubernetes.core.helm_repository:
         name: metallb
         repo_url: "https://metallb.github.io/metallb"
-        update_repo_cache: true
 
     - name: Install metallb baremetal
       kubernetes.core.helm:
@@ -85,6 +84,7 @@
         release_namespace: metallb-system
         create_namespace: true
         state: present
+        update_repo_cache: true
 
     - name: Create manifest metallb IPAddressPool
       kubernetes.core.k8s:
