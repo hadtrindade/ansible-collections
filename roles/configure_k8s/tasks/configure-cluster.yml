@@ -30,7 +30,7 @@
     - name: Fetch k8s cluster config file
       ansible.builtin.fetch:
         src: "{{ ansible_env.HOME }}/.kube/config"
-        dest: "{{ ansible_env.HOME }}/.kube/treinamento_devops_config.yaml"
+        dest: "{{ lookup('env', 'HOME') }}/.kube/treinamento_devops_config.yaml"
         flat: yes
 
     - name: Install addon Weave Net
