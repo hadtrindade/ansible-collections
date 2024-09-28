@@ -63,9 +63,9 @@
         name: nginx-stable
         repo_url: https://kubernetes.github.io/ingress-nginx
         
-    - name: Install NGINX Ingress Controller for baremetal
+    - name: Install NGINX Ingress Controller
       kubernetes.core.helm:
-        name: nginx-ingress
+        name: nginx-stable
         chart_ref: ingress-nginx
         release_namespace: ingress-nginx
         create_namespace: true
