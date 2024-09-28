@@ -13,6 +13,7 @@ tags:
   - devops
 dependencies:
   community.general: '>=1.0.0'
+  kubernetes.core: '>=5.0.0'
 repository: https://github.com/hadtrindade/ansible-collections
 documentation: https://github.com/hadtrindade/ansible-collections
 homepage: https://github.com/hadtrindade/ansible-collections
