@@ -1,7 +1,7 @@
 ---
 namespace: treinamento
 name: devops
-version: 0.2.6
+version: 0.2.7
 readme: README.md
 authors:
 - Haddley Trindade <haddleytrindade@gmail.com>

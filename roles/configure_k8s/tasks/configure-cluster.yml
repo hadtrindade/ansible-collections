@@ -46,6 +46,14 @@
 
 - name: Install helm and config nginx and metallb
   block:
+    - name: Install Python dependencies
+      ansible.builtin.pip:
+        name:
+          - kubernetes
+          - PyYAML
+          - jsonpatch
+        state: present
+
     - name: Download helm
       ansible.builtin.get_url:
         url: "{{ url_helm }}"
