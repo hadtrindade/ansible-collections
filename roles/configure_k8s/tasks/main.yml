@@ -3,3 +3,7 @@
 
 - name: Include configure cluster
   ansible.builtin.include_tasks: configure-cluster.yml
+
+- name: Include install helm and config ingress-nginx and metallb
+  ansible.builtin.include_tasks: configure-metallb-ingress.yaml
+  when: "'control_plane' in group_names"

@@ -25,6 +25,13 @@
         remote_src: true
         owner: root
         group: root
+        mode: 0600
+    
+    - name: Fetch k8s cluster config file
+      ansible.builtin.fetch:
+        src: "{{ ansible_env.HOME }}/.kube/config"
+        dest: "{{ ansible_env.HOME }}/.kube/treinamento_devops_config.yaml"
+        flat: yes
 
     - name: Install addon Weave Net
       ansible.builtin.shell:
@@ -43,80 +50,3 @@
   when:
     - "'kubeadm join' in join_command.stdout"
     - "'workers' in group_names"
-
-- name: Install helm and config nginx and metallb
-  block:
-    - name: Install Python dependencies
-      ansible.builtin.pip:
-        name:
-          - kubernetes
-          - PyYAML
-          - jsonpatch
-        state: present
-
-    - name: Download helm
-      ansible.builtin.get_url:
-        url: "{{ url_helm }}"
-        dest: /tmp/get_helm.sh
-        mode: 0700
-      register: download
-
-    - name: Install Helm
-      ansible.builtin.shell: /tmp/get_helm.sh
-      when:
-        - download.failed|bool == false
-
-    - name: Add stable chart repo NGINX
-      kubernetes.core.helm_repository:
-        name: nginx-stable
-        repo_url: https://kubernetes.github.io/ingress-nginx
-        
-    - name: Install NGINX Ingress Controller
-      kubernetes.core.helm:
-        name: nginx-stable
-        chart_ref: nginx-stable/ingress-nginx
-        release_namespace: ingress-nginx
-        create_namespace: true
-        state: present
-        update_repo_cache: true
-
-    - name: Add stable chart repo metallb
-      kubernetes.core.helm_repository:
-        name: metallb
-        repo_url: "https://metallb.github.io/metallb"
-
-    - name: Install metallb baremetal
-      kubernetes.core.helm:
-        name: metallb
-        chart_ref: metallb/metallb
-        release_namespace: metallb-system
-        create_namespace: true
-        state: present
-        update_repo_cache: true
-
-    - name: Create manifest metallb IPAddressPool
-      kubernetes.core.k8s:
-        state: present
-        definition:
-          apiVersion: metallb.io/v1beta1
-          kind: IPAddressPool
-          metadata:
-            name: default
-            namespace: metallb-system
-          spec:
-            addresses: "{{ metallb_ipaddrpool }}"
-            autoAssign: true
-          
-    - name: Create manifest metallb L2Advertisement
-      kubernetes.core.k8s:
-        state: present
-        definition:
-          apiVersion: metallb.io/v1beta1
-          kind: L2Advertisement
-          metadata:
-            name: default
-            namespace: metallb-system
-          spec:
-            ipAddressPools:
-            - default
-  when: "'control_plane' in group_names"

@@ -5,6 +5,7 @@ dependencies:
   - ca-certificates
   - curl
   - gpg
+  - python-pip3
 
 docker_pkgs:
   - docker-ce
