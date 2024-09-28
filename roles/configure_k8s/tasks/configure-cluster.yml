@@ -58,16 +58,15 @@
       when:
         - download.failed|bool == false
 
-    - name: Add stable chart repo
+    - name: Add stable chart repo NGINX
       kubernetes.core.helm_repository:
         name: nginx-stable
-        repo_url: "https://kubernetes.github.io/ingress-nginx"
+        repo_url: https://kubernetes.github.io/ingress-nginx
         
-
     - name: Install NGINX Ingress Controller for baremetal
       kubernetes.core.helm:
         name: nginx-ingress
-        chart_ref: nginx-stable/nginx-ingress
+        chart_ref: ingress-nginx
         release_namespace: ingress-nginx
         create_namespace: true
         state: present
